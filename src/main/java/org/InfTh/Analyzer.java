@@ -1,4 +1,4 @@
-package org.TI_lab;
+package org.InfTh;
 
 import java.io.*;
 import java.util.*;
@@ -45,5 +45,41 @@ public class Analyzer {
         return alphabetTable.entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).toList();
+    }
+
+    public static float sumProbability(List<Map.Entry<Character, LetterInfo>> list){
+        return (float) list.stream()
+                .mapToDouble(e -> e.getValue().getProbability())
+                .sum();
+    }
+    public static void Shannon_Fano(List<Map.Entry<Character, LetterInfo>> list){
+        if(list.size() == 1) return;
+        float leftSum = -1.0f, rightSum = 0.0f;
+        List<Map.Entry<Character, LetterInfo>> leftSublist = null, rightSublist = null;
+        int mid = (int)(list.size()/2.0 + 0.5); //ceil
+        for (int i = 0; leftSum < rightSum && i < mid; i++){
+            leftSublist = list.subList(0,i+1);
+            leftSum = sumProbability(leftSublist);
+            rightSublist = list.subList(i+1,list.size());
+            rightSum = sumProbability(rightSublist);
+        }
+        leftSublist.forEach(e -> e.getValue().concatCode("0"));
+        rightSublist.forEach(e -> e.getValue().concatCode("1"));
+        Shannon_Fano(leftSublist);
+        Shannon_Fano(rightSublist);
+    }
+    public static float averageWordLenght(List<Map.Entry<Character, LetterInfo>> list){
+        return (float) list.stream()
+                .mapToDouble(e -> e.getValue()
+                            .getProbability() * e.getValue()
+                                .getCode()
+                                .length())
+                .sum();
+    }
+    public static float minimumWordLenght(List<Map.Entry<Character, LetterInfo>> list){
+        return (float) list.stream()
+                .mapToDouble(e -> e.getValue()
+                        .getEntropy())
+                .sum();
     }
 }

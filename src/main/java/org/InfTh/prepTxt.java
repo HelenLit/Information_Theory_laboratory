@@ -1,4 +1,4 @@
-package org.TI_lab;
+package org.InfTh;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;

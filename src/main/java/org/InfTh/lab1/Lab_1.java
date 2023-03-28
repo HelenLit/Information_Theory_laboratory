@@ -1,11 +1,15 @@
-package org.TI_lab;
+package org.InfTh.lab1;
+
+import org.InfTh.Analyzer;
+import org.InfTh.LetterInfo;
+import org.InfTh.prepTxt;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 //D:\Books\Rich-Dad-Poor-Dad-eBook.pdf
 //D:\Books\Schildt_H-Java_The_Complete_Reference_12th_edition_-_2021.pdf
-public class Lab_1 {
+class Lab_1 {
     public static void main(String[] args) {
         Analyzer analyzer = new Analyzer();
         Scanner scan = new Scanner(System.in);
@@ -46,7 +50,7 @@ public class Lab_1 {
         System.out.println(line);
         System.out.print("|\tLetter\t|\t\tI\t\t|\n");
         System.out.print(line);
-        list.forEach(e -> System.out.printf("\n|\t%-8c|\t%f\t|",e.getKey(), e.getValue().countAmountOfInfo()));
+        list.forEach(e -> System.out.printf("\n|\t%-8c|\t%f\t|",e.getKey(), e.getValue().getAmountOfInfo()));
         System.out.println("\n"+line);
     }
 
@@ -69,7 +73,7 @@ public class Lab_1 {
         System.out.print(line);
         double sum = 0.0;
         for (var e: list) {
-            float entropy = e.getValue().countEntropy();
+            float entropy = e.getValue().getEntropy();
             System.out.printf("\n|\t%-8c|\t%f\t|",e.getKey(), entropy);
             sum += entropy;
         }
