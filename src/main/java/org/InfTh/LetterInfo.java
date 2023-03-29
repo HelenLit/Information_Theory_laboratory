@@ -15,8 +15,11 @@ public class LetterInfo implements Comparable {
         return probability = (float) getQuantity() / totalQuantity;
     }
 
-    private float countAmountOfInfo() {
-        return amountOfInfo = (float) -(Math.log(getProbability()) / Math.log(2));
+    private void countAmountOfInfo() {
+        if(getProbability()>0.0)
+         amountOfInfo = (float) -(Math.log(getProbability()) / Math.log(2));
+        else
+            amountOfInfo = 0.0f;
     }
     public float getAmountOfInfo() {
         if(amountOfInfo < 0){
@@ -25,8 +28,8 @@ public class LetterInfo implements Comparable {
         return amountOfInfo;
     }
 
-    private float countEntropy() {
-        return entropy = probability * getAmountOfInfo();
+    private void countEntropy() {
+         entropy = probability * getAmountOfInfo();
     }
 
     public int getQuantity() {

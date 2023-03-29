@@ -14,8 +14,11 @@ public class PrepareTxt {
     private boolean inputTypeCons;
     private String sourceName;
 
-    public void extractText() {
+    public PrepareTxt() {
         file.deleteOnExit();
+    }
+
+    public void extractText() {
         if(inputTypeCons)
             extractFromConsole();
         else
@@ -29,7 +32,8 @@ public class PrepareTxt {
                 FileUtils.writeStringToFile(
                         file
                         ,line
-                        ,Charset.defaultCharset().name());
+                        ,Charset.defaultCharset()
+                        ,Boolean.TRUE);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -46,7 +50,8 @@ public class PrepareTxt {
             FileUtils.writeStringToFile(
                     file
                     ,stripper.getText(document).trim()
-                    ,Charset.defaultCharset().name());
+                    ,Charset.defaultCharset().name()
+                    ,Boolean.TRUE);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -67,16 +72,12 @@ public class PrepareTxt {
 
     public void outputText(){
         try {
-            BufferedReader br = new BufferedReader(new FileReader("fight.json"));
+            BufferedReader br = new BufferedReader(new FileReader(file.getCanonicalFile()));
             String line;
             while ((line = br.readLine()) != null) {
                 System.out.println(line);
             }
-        }catch (FileNotFoundException e){
-            System.out.println("??????? ????????.\n");
-            e.printStackTrace();
-        } catch (IOException e) {
-            System.out.println("??????? ????????.\n");
+        }catch (IOException e){
             e.printStackTrace();
         }
     }

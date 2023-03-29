@@ -6,11 +6,13 @@ import java.util.*;
 public class Analyzer {
 
     private int totalQuantity = 0;
-     private Map<Character, LetterInfo> alphabetTable = new LinkedHashMap<>(52);
+    private final Map<Character, LetterInfo> alphabetTable;
+    private List<Map.Entry<Character, LetterInfo>> listOfLetters;
 
     public Analyzer(Character[] symbols) {
         if(symbols == null)
             throw new NullPointerException();
+        alphabetTable = new  HashMap<>(symbols.length);
         Arrays.stream(symbols).toList().forEach(l -> alphabetTable.put(l, new LetterInfo()));
     }
 
@@ -45,11 +47,15 @@ public class Analyzer {
     }
     public List<Map.Entry<Character, LetterInfo>> sort(){
         setProbabilityToAll();
-        return alphabetTable.entrySet()
+        return listOfLetters = alphabetTable.entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).toList();
     }
-
+    public static float sumEntropy(List<Map.Entry<Character, LetterInfo>> list){
+        return (float) list.stream()
+                .mapToDouble(e -> e.getValue().getEntropy())
+                .sum();
+    }
     public static float sumProbability(List<Map.Entry<Character, LetterInfo>> list){
         return (float) list.stream()
                 .mapToDouble(e -> e.getValue().getProbability())
@@ -84,5 +90,9 @@ public class Analyzer {
                 .mapToDouble(e -> e.getValue()
                         .getEntropy())
                 .sum();
+    }
+
+    public List<Map.Entry<Character, LetterInfo>> getListOfLetters() {
+        return listOfLetters;
     }
 }
