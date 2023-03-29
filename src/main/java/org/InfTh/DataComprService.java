@@ -7,7 +7,7 @@ public class DataComprService {
 
     public static void input(){
         Scanner scan = new Scanner(System.in);
-        System.out.print("Обреріть мову алфавіту(1 - en, 2 - ukr): ");
+        System.out.print("РћР±СЂРµСЂС–С‚СЊ РјРѕРІСѓ Р°Р»С„Р°РІС–С‚Сѓ(1 - en, 2 - ukr): ");
         int res = Integer.parseInt(scan.next());
         if(res == 1){
             analyzer = new Analyzer(Alphabet.ENG);
@@ -16,17 +16,17 @@ public class DataComprService {
 
         PrepareTxt prepTxt = new PrepareTxt();
         do {
-            System.out.print("Джерело надходження тексту(1 - консоль, 2 - файл): ");
+            System.out.print("Р”Р¶РµСЂРµР»Рѕ РЅР°РґС…РѕРґР¶РµРЅРЅСЏ С‚РµРєСЃС‚Сѓ(1 - РєРѕРЅСЃРѕР»СЊ, 2 - С„Р°Р№Р»): ");
             res = Integer.parseInt(scan.next());
             if (res == 1) {
                 prepTxt.setInputToConsole();
-                System.out.println("Кінець введення - пустий рядок\nВведіть текст для аналізу:");
+                System.out.println("РљС–РЅРµС†СЊ РІРІРµРґРµРЅРЅСЏ - РїСѓСЃС‚РёР№ СЂСЏРґРѕРє\nР’РІРµРґС–С‚СЊ С‚РµРєСЃС‚ РґР»СЏ Р°РЅР°Р»С–Р·Сѓ:");
             } else {
-                System.out.print("Введіть назву файлу: ");
+                System.out.print("Р’РІРµРґС–С‚СЊ РЅР°Р·РІСѓ С„Р°Р№Р»Сѓ: ");
                 prepTxt.setInputToFile(scan.nextLine().trim());
             }
             char answ;
-            System.out.print("Вивести введені дані?(y - так, n - ні): ");
+            System.out.print("Р’РёРІРµСЃС‚Рё РІРІРµРґРµРЅС– РґР°РЅС–?(y - С‚Р°Рє, n - РЅС–): ");
             answ = scan.nextLine().charAt(0);
             if(answ == 'y'){
                 prepTxt.outputText();

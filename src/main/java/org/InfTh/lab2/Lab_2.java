@@ -7,29 +7,29 @@ import java.util.*;
 import static org.InfTh.Analyzer.*;
 
 
-//а 0.06 б 0.08 в 0.3 г 0.12 д 0.14 е 0.09 є 0.03 ж 0.06 з 0.08 й 0.04
+//Р° 0.06 Р± 0.08 РІ 0.3 Рі 0.12 Рґ 0.14 Рµ 0.09 С” 0.03 Р¶ 0.06 Р· 0.08 Р№ 0.04
 
 public class Lab_2 {
     public static void main(String[] args) {
         var letters = sortToList(input());
-        System.out.printf("\nСума ймовірностей: %.2f\n", sumProbability(letters));
-        System.out.println("Посортовані букви:");
+        System.out.printf("\nРЎСѓРјР° Р№РјРѕРІС–СЂРЅРѕСЃС‚РµР№: %.2f\n", sumProbability(letters));
+        System.out.println("РџРѕСЃРѕСЂС‚РѕРІР°РЅС– Р±СѓРєРІРё:");
         printList(letters, false);
         Shannon_Fano(letters);
-        System.out.println("\nБукви, їх ймовірності та коди, сформовані методом Шеннона—Фано:");
+        System.out.println("\nР‘СѓРєРІРё, С—С… Р№РјРѕРІС–СЂРЅРѕСЃС‚С– С‚Р° РєРѕРґРё, СЃС„РѕСЂРјРѕРІР°РЅС– РјРµС‚РѕРґРѕРј РЁРµРЅРЅРѕРЅР°вЂ”Р¤Р°РЅРѕ:");
         printList(letters, true);
-        System.out.print("\nСередня довжина кодового слова: " + averageWordLenght(letters));
-        System.out.print("\nМінімальна довжина кодового слова: " + minimumWordLenght(letters));
+        System.out.print("\nРЎРµСЂРµРґРЅСЏ РґРѕРІР¶РёРЅР° РєРѕРґРѕРІРѕРіРѕ СЃР»РѕРІР°: " + averageWordLenght(letters));
+        System.out.print("\nРњС–РЅС–РјР°Р»СЊРЅР° РґРѕРІР¶РёРЅР° РєРѕРґРѕРІРѕРіРѕ СЃР»РѕРІР°: " + minimumWordLenght(letters));
     }
 
     static Map<Character, LetterInfo> input(){
         Scanner scan = new Scanner(System.in);
         do {
-            System.out.print("\nВведіть кількість букв: ");
+            System.out.print("\nР’РІРµРґС–С‚СЊ РєС–Р»СЊРєС–СЃС‚СЊ Р±СѓРєРІ: ");
         }while (!scan.hasNextInt());
         int lenght = scan.nextInt();
         Map<Character, LetterInfo> letters = new LinkedHashMap<>(lenght);
-        System.out.print("Введіть букви та їх ймовірності: ");
+        System.out.print("Р’РІРµРґС–С‚СЊ Р±СѓРєРІРё С‚Р° С—С… Р№РјРѕРІС–СЂРЅРѕСЃС‚С–: ");
         for (int i = 0; i < lenght; i++) {
             char c = scan.next().charAt(0);
             LetterInfo letterInfo = new LetterInfo();
