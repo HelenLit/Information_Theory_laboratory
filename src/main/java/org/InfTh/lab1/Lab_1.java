@@ -1,8 +1,9 @@
 package org.InfTh.lab1;
 
+import org.InfTh.Alphabet;
 import org.InfTh.Analyzer;
 import org.InfTh.LetterInfo;
-import org.InfTh.prepTxt;
+import org.InfTh.PrepareTxt;
 
 import java.util.List;
 import java.util.Map;
@@ -11,12 +12,12 @@ import java.util.Scanner;
 //D:\Books\Schildt_H-Java_The_Complete_Reference_12th_edition_-_2021.pdf
 class Lab_1 {
     public static void main(String[] args) {
-        Analyzer analyzer = new Analyzer();
+        Analyzer analyzer = new Analyzer(Alphabet.ENG);
         Scanner scan = new Scanner(System.in);
         System.out.print("Enter path of the book you want to analyze: ");
-        prepTxt.extractText(scan.next());
+        PrepareTxt.extractText(scan.next());
         scan.nextLine();
-        analyzer.analyzeText(prepTxt.getFile());
+        analyzer.analyzeText(PrepareTxt.getFile());
         var listOfLetters = analyzer.sort();
         printAlphabet(listOfLetters);
         printAmountOfInfoLetter(listOfLetters);

@@ -4,11 +4,14 @@ import java.io.*;
 import java.util.*;
 
 public class Analyzer {
+
     private int totalQuantity = 0;
      private Map<Character, LetterInfo> alphabetTable = new LinkedHashMap<>(52);
-    {
-        Character[] Letters = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z','A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
-        Arrays.stream(Letters).toList().forEach(l -> alphabetTable.put(l, new LetterInfo()));
+
+    public Analyzer(Character[] symbols) {
+        if(symbols == null)
+            throw new NullPointerException();
+        Arrays.stream(symbols).toList().forEach(l -> alphabetTable.put(l, new LetterInfo()));
     }
 
     public void incrementTotalQuantity(){
