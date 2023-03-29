@@ -1,9 +1,6 @@
 package org.InfTh.lab2;
-
 import org.InfTh.LetterInfo;
-
 import java.util.*;
-
 import static org.InfTh.Analyzer.*;
 
 
@@ -11,6 +8,7 @@ import static org.InfTh.Analyzer.*;
 
 public class Lab_2 {
     public static void main(String[] args) {
+        System.out.println("Виконала:\nСтудентка КН-201\nЛітовська Олена");
         var letters = sortToList(input());
         System.out.printf("\nСума ймовірностей: %.2f\n", sumProbability(letters));
         System.out.println("Посортовані букви:");
@@ -38,7 +36,6 @@ public class Lab_2 {
         }
         return letters;
     }
-
     static List<Map.Entry<Character, LetterInfo>> sortToList(Map<Character, LetterInfo> map){
         return map.entrySet()
                 .stream()

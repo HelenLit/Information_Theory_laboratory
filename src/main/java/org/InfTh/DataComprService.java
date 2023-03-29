@@ -58,7 +58,7 @@ public class DataComprService {
         double sum = 0.0;
         for (var e: analyzer.getListOfLetters()) {
             float entropy = e.getValue().getEntropy();
-            System.out.printf("\n|\t%4c\t|\t%-8.8s\t|",e.getKey(), Float.isNaN(entropy)?"----": Float.toString(entropy));
+            System.out.printf("\n|\t%4c\t|\t%-8.8s\t|",e.getKey(), (entropy == 0.0f) ? "----": Float.toString(entropy));
             sum += entropy;
         }
         System.out.println("\n"+line);
@@ -76,7 +76,7 @@ public class DataComprService {
         System.out.print(line);
         analyzer.getListOfLetters().forEach(e -> {
             float value = e.getValue().getAmountOfInfo();
-            System.out.printf("\n|\t%4c\t|\t%-8.8s\t|", e.getKey(), Float.isInfinite(value)?"----" : Float.toString(value));
+            System.out.printf("\n|\t%4c\t|\t%-8.8s\t|", e.getKey(), (value == 0.0f) ? "----" : Float.toString(value));
         });
         System.out.println("\n"+line);
     }
