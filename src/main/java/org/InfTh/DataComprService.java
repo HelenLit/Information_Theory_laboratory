@@ -1,9 +1,11 @@
 package org.InfTh;
 import java.util.Scanner;
-//D:\Books\Rich-Dad-Poor-Dad-eBook.pdf
+import java.util.function.Consumer;
+
+
 public class DataComprService {
     private static Analyzer analyzer;
-
+    private static boolean printSteps;
     public static void input(){
         Scanner scan = new Scanner(System.in);
         System.out.print("Обреріть мову алфавіту(1 - en, 2 - ukr): ");
@@ -34,13 +36,18 @@ public class DataComprService {
             System.out.print("Продовжити введення тексту?(y - так, n - ні): ");
             answ = scan.nextLine().charAt(0);
         }while (answ == 'y');
-
+        System.out.print("Відобразити покроково алоритм Шеннона-Фанно?(y - так, n - ні): ");
+        answ = scan.nextLine().charAt(0);
+        if(answ == 'y'){
+            printSteps = true;
+        }
         analyzer.analyzeText(prepTxt.getFile());
+        System.out.println("\nЗагальна кількість символів у тексті: " + analyzer.getTotalQuantity());
         analyzer.sort();
     }
     private static String line = "-----------------------------";
-    public static void printAlphabet(boolean withCode){
-        if(!withCode) System.out.println(line);
+    public static void printAlphabet(Boolean withCode){
+        System.out.println("\n" + (!withCode?line:""));
         System.out.print("|\tSymbol\t|\t\tpi\t\t|" + (withCode ? ("\tCode:"):"\n"));
         if(!withCode) System.out.print(line);
         analyzer.getListOfLetters().forEach(e -> {
@@ -48,8 +55,7 @@ public class DataComprService {
                     e.getKey(), e.getValue().getProbability()
                     , (withCode ? (e.getValue().getCode()) : ""));
         });
-        if(!withCode) System.out.println("\n"+line);
-
+        if(!withCode) System.out.print("\n"+line);
     }
     public static void printEntropy(){
         System.out.println(line);
@@ -82,7 +88,12 @@ public class DataComprService {
     }
 
     public static void completeShannonFano(){
-        Analyzer.Shannon_Fano(analyzer.getListOfLetters());
+        Consumer<Boolean> printMethod;
+        if(printSteps)
+            printMethod = DataComprService::printAlphabet;
+        else
+            printMethod = (b)->{};
+        Analyzer.Shannon_Fano(analyzer.getListOfLetters(),printMethod);
     }
     public static double countMessageAmountOfInfo(String message){
         double result = 0.0;

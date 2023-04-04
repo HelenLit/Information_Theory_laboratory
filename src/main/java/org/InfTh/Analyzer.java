@@ -2,6 +2,7 @@ package org.InfTh;
 
 import java.io.*;
 import java.util.*;
+import java.util.function.Consumer;
 
 public class Analyzer {
 
@@ -9,15 +10,19 @@ public class Analyzer {
     private final Map<Character, LetterInfo> alphabetTable;
     private List<Map.Entry<Character, LetterInfo>> listOfLetters;
 
-    public Analyzer(Character[] symbols) {
-        if(symbols == null)
+    public Analyzer(Character[] array) {
+        if(array == null)
             throw new NullPointerException();
-        alphabetTable = new  HashMap<>(symbols.length);
-        Arrays.stream(symbols).toList().forEach(l -> alphabetTable.put(l, new LetterInfo()));
+        alphabetTable = new  HashMap<>(array.length);
+        Arrays.stream(array).toList().forEach(l -> alphabetTable.put(l, new LetterInfo()));
     }
 
     public void incrementTotalQuantity(){
         totalQuantity++;
+    }
+
+    public int getTotalQuantity() {
+        return totalQuantity;
     }
 
     public Map<Character, LetterInfo> getAlphabetTable() {
@@ -28,17 +33,20 @@ public class Analyzer {
         int character=0;
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
             while ((character = reader.read()) != -1) {
+                try{
                 if(Character.isLetter(character)) {
                     alphabetTable.get((char) character).incrementQuantity();
-                    incrementTotalQuantity();
                 }
+                }catch (NullPointerException e){
+                   // System.out.println("Could not find this letter in alphabet - " + (char)character);
+                    continue;
+                }
+                incrementTotalQuantity();
             }
         } catch (FileNotFoundException e) {
             System.out.println("Error file was not found");
         } catch (IOException e) {
             System.out.println("Error while reading file");
-        }catch (NullPointerException e){
-            System.out.println("Last character - " + (char)character);
         }
     }
 
@@ -61,7 +69,7 @@ public class Analyzer {
                 .mapToDouble(e -> e.getValue().getProbability())
                 .sum();
     }
-    public static void Shannon_Fano(List<Map.Entry<Character, LetterInfo>> list){
+    public static void Shannon_Fano(List<Map.Entry<Character, LetterInfo>> list, Consumer<Boolean> print){
         if(list.size() == 1) return;
         float leftSum = -1.0f, rightSum = 0.0f;
         List<Map.Entry<Character, LetterInfo>> leftSublist = null, rightSublist = null;
@@ -74,8 +82,9 @@ public class Analyzer {
         }
         leftSublist.forEach(e -> e.getValue().concatCode("0"));
         rightSublist.forEach(e -> e.getValue().concatCode("1"));
-        Shannon_Fano(leftSublist);
-        Shannon_Fano(rightSublist);
+        print.accept(true);
+        Shannon_Fano(leftSublist,print);
+        Shannon_Fano(rightSublist,print);
     }
     public static float averageWordLenght(List<Map.Entry<Character, LetterInfo>> list){
         return (float) list.stream()
